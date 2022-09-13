@@ -23,3 +23,5 @@ app.post("/user/login", (req, res) => {
 app.listen(process.env.DEV_PORT, () =>
   console.log(`Login app listening on DEV_PORT ${process.env.DEV_PORT}!`)
 );
+
+console.log("Welcome to Develop!");
