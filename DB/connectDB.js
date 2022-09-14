@@ -6,3 +6,5 @@ mongoose
   })
   .then(() => console.log("Connection Established..!!"))
   .catch((error) => console.log("Error:", error));
+
+console.log("Helloo");
