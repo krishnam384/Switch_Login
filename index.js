@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 require("dotenv").config();
+require("./DB/connectDB");
+const User = require("./model/UserSchema");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -18,6 +20,22 @@ app.post("/user/login", (req, res) => {
   return res.status(404).json({
     message: "User Not Found!",
   });
+});
+
+app.post("/user/signup", async (req, res) => {
+  // const { username, password } = req.body;
+
+  const user = new User(req.body);
+  try {
+    await user.save();
+    res.status(201).json({
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 });
 
 app.listen(process.env.DEV_PORT, () =>
