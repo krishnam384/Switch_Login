@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost:27017/Switch", {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
   })
-  .then(() => console.log("Connection Established..!!"))
+  .then(() => console.log("Connection Established with DB..!!"))
   .catch((error) => console.log("Error:", error));
-
-console.log("Helloo");
