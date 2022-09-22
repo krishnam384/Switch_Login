@@ -1,6 +1,8 @@
-const bcrypt = require("bcrypt");
 const express = require("express");
 const _ = require("lodash");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const User = require("../models/UserSchema");
 
 const getAllUsers = async (req, res) => {
@@ -57,10 +59,15 @@ const postLoginUser = async (req, res) => {
     });
   }
 
-  return res.status(200).json({
-    message: "User retrieved Successfully..!!",
-    user: _.pick(userFound, ["username", "_id"]),
-  });
+  const token = User.generateAuthToken();
+
+  return res
+    .header("x-auth-token", token)
+    .status(200)
+    .json({
+      message: "User retrieved Successfully..!!",
+      user: _.pick(userFound, ["username", "_id"]),
+    });
 };
 
 module.exports = {
